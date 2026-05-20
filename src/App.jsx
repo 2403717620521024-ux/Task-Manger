@@ -15,14 +15,14 @@ export default function App() {
     e.preventDefault();
 
     if (task.trim() === "") {
-      setError("Task cannot be empty");
+      setError("Please enter a task");
       return;
     }
 
     const newTask = {
       id: Date.now(),
       text: task,
-      completed: false
+      completed: false,
     };
 
     setTasks([newTask, ...tasks]);
@@ -47,35 +47,40 @@ export default function App() {
   return (
     <div className="container">
       <div className="card">
-        <h1>Task Manager</h1>
-        <p className="subtitle">
-          Responsive React task app using Hooks, validation and dynamic rendering
-        </p>
+        <div className="top-section">
+          <h1>Task Manager</h1>
+          <p>Simple and responsive React task application</p>
+        </div>
 
-        <form onSubmit={addTask} className="task-form">
+        <form className="task-form" onSubmit={addTask}>
           <input
             type="text"
-            placeholder="Enter a task..."
+            placeholder="Add your task..."
             value={task}
             onChange={(e) => setTask(e.target.value)}
           />
 
-          <button type="submit">Add Task</button>
+          <button type="submit">Add</button>
         </form>
 
         {error && <p className="error">{error}</p>}
 
         <div className="stats">
-          <span>Total: {tasks.length}</span>
-          <span>
-            Completed: {tasks.filter((t) => t.completed).length}
-          </span>
+          <div className="stat-box">
+            <h2>{tasks.length}</h2>
+            <span>Total Tasks</span>
+          </div>
+
+          <div className="stat-box">
+            <h2>{tasks.filter((t) => t.completed).length}</h2>
+            <span>Completed</span>
+          </div>
         </div>
 
         <div className="task-list">
           {tasks.length === 0 ? (
             <div className="empty">
-              No tasks added yet
+              <p>No tasks available</p>
             </div>
           ) : (
             tasks.map((item) => (
